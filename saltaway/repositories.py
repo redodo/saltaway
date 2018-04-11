@@ -21,7 +21,7 @@ class Repository:
     def push(self, url):
         """Archives the resource in this repository.
 
-        :param uri: the URL of the resource that should be archived
+        :param url: the URL of the resource that should be archived
         :return: the link to the archived resource
         """
         raise NotImplementedError(
