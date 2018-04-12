@@ -83,7 +83,7 @@ class ArchiveIs(Repository):
                     )
 
 
-class WaybackMachine(Repository):
+class InternetArchive(Repository):
 
     name = 'web.archive.org'
 

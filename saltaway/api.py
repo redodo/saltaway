@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import concurrent.futures
 
-from .repositories import ArchiveIs, WaybackMachine
+from .repositories import ArchiveIs, InternetArchive
 
 
 REPOSITORIES = (
     ArchiveIs,
-    WaybackMachine,
+    InternetArchive,
 )
 
 
