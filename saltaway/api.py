@@ -2,7 +2,13 @@
 from .repositories import ArchiveIs, WaybackMachine
 
 
-def push(url, repos=[ArchiveIs, WaybackMachine]):
+REPOSITORIES = (
+    ArchiveIs,
+    WaybackMachine,
+)
+
+
+def push(url, repos=REPOSITORIES):
     if not isinstance(repos, (list, tuple)):
         repos = [repos]
     for repo in repos:

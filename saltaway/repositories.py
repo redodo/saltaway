@@ -25,7 +25,7 @@ class Repository:
         :return: the link to the archived resource
         """
         raise NotImplementedError(
-            "'_push' method not implemented by repository '%s'"
+            "'push' method not implemented by repository '%s'"
             % self.__class__.__name__
         )
 
