@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import concurrent.futures
+
 from .repositories import ArchiveIs, WaybackMachine
 
 
@@ -9,7 +11,10 @@ REPOSITORIES = (
 
 
 def push(url, repos=REPOSITORIES):
-    if not isinstance(repos, (list, tuple)):
-        repos = [repos]
-    for repo in repos:
-        yield repo.name, repo().push(url)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future_to_repo = {
+            executor.submit(repo().push, url): repo
+            for repo in repos
+        }
+        for future in concurrent.futures.as_completed(future_to_repo):
+            yield future_to_repo[future], future.result()
