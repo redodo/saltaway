@@ -3,8 +3,8 @@ from setuptools import setup
 
 setup(
     name='saltaway',
-    version='0.1.0',
-    description='Trigger archival at verious archivers',
+    version='0.1.1',
+    description='Instantly archive web pages at various archives.',
     url='https://github.com/redodo/saltaway',
     author='Hidde Bultsma',
     author_email='me@redodo.io',
