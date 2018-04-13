@@ -6,6 +6,10 @@ import requests
 import pendulum
 
 from .exceptions import RepositoryFailure, ArchivalFailure
+from .utils import parse_duration
+
+
+_NONE_DURATION = pendulum.Interval()
 
 
 class Repository:
@@ -21,7 +25,16 @@ class Repository:
             'User-Agent': self.user_agent,
         }
 
-    def push(self, url):
+    def push(self, url, max_age=0):
+        max_age = parse_duration(max_age)
+        if max_age > _NONE_DURATION:
+            datetime, location = self.pull(url)
+            if datetime > pendulum.now() - max_age:
+                return location
+
+        return self._push(url)
+
+    def _push(self, url):
         """Archives the resource in this repository.
 
         :param url: the URL of the resource that should be archived
@@ -33,6 +46,9 @@ class Repository:
         )
 
     def pull(self, url):
+        return self._pull(url)
+
+    def _pull(self, url):
         """Returns the latest archived version of a resource.
 
         :param url: the URL of the resource
@@ -49,7 +65,7 @@ class ArchiveIs(Repository):
 
     name = 'archive.is'
 
-    def push(self, url):
+    def _push(self, url):
         submit_id = self._get_submit_id()
         r = self.session.post('http://archive.is/submit/', data={
             'url': url,
@@ -97,7 +113,16 @@ class ArchiveIs(Repository):
                         "could not find a 'submit_id' in the request form",
                     )
 
-    def pull(self, url):
+    def _pull(self, url):
+        """Pulls the latest archived version of a URL from archive.is.
+
+        The datetime returned from this function is not entirely exact,
+        because it misses the seconds. An extra HEAD request to the
+        archive URL would be needed to get an exact datetime.
+
+        :param url: the URL of the resource to find
+        :return: tuple with a Pendulum datetime, and an archive URL
+        """
         r = self.session.get('http://archive.is/' + url)
         html = lxml.html.fromstring(r.text)
 
@@ -121,7 +146,7 @@ class InternetArchive(Repository):
 
     name = 'web.archive.org'
 
-    def push(self, url):
+    def _push(self, url):
         r = self.session.get('https://web.archive.org/save/' + url)
         r.raise_for_status()
 
@@ -136,7 +161,7 @@ class InternetArchive(Repository):
                 elif 'Content-Location' in redirect.headers:
                     return redirect.headers['Content-Location']
 
-    def pull(self, url):
+    def _pull(self, url):
         r = self.session.head(
             'https://web.archive.org/web/' + url,
             allow_redirects=False,

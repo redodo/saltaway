@@ -6,7 +6,8 @@ Version 0.2.0
 
 Unreleased.
 
-- Get the latest archived version of a resource using the `--find`
+- Added a max age parameter to enable 'soft' resource archival
+- Get the latest archived version of a resource using the `-q`
   option in the cli, or the `saltaway.pull` method.
 
 Version 0.1.1
