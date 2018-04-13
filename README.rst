@@ -12,7 +12,12 @@ It can be used from the command line:
 
 .. code-block:: bash
 
-    saltaway https://example.org
+    $ saltaway https://example.org
+    http://archive.is/w6p4f
+    https://web.archive.org/web/20180413141843/https://example.org
+    $ saltaway -q https://example.org
+    2018-04-13T14:18:43+00:00 https://web.archive.org/web/20180413141843/https://example.org/
+    2018-04-13T14:18:00+00:00 http://archive.is/w6p4f
 
 And in Python:
 
