@@ -14,6 +14,7 @@ class DurationType(click.ParamType):
         except ValueError as e:
             self.fail(e, param, ctx)
 
+
 DURATION = DurationType()
 
 

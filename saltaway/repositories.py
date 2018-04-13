@@ -77,7 +77,7 @@ class ArchiveIs(Repository):
             r.raise_for_status()
         except requests.HTTPError as e:
             raise ArchivalFailure(e)
-        
+
         if 'Refresh' in r.headers:
             try:
                 return r.headers['Refresh'].split(';url=')[1]

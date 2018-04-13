@@ -15,7 +15,7 @@ _TIME_DENOMINATIONS = {
 
 def duration_from_string(value):
     parts = [(float(e[:-1]), e[-1]) for e in value.split()]
-    
+
     duration_input = {}
     for length, char in parts:
         try:
