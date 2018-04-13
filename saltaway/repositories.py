@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+from urllib.parse import urlparse
+
 import lxml.html
 import requests
+import pendulum
 
 from .exceptions import RepositoryFailure, ArchivalFailure
 
@@ -26,6 +29,18 @@ class Repository:
         """
         raise NotImplementedError(
             "'push' method not implemented by repository '%s'"
+            % self.__class__.__name__
+        )
+
+    def pull(self, url):
+        """Returns the latest archived version of a resource.
+
+        :param url: the URL of the resource
+        :return: a tuple containing the date and URL of the latest
+            archived version of the resource
+        """
+        raise NotImplementedError(
+            "'latest' method not implemented by repository '%s'"
             % self.__class__.__name__
         )
 
@@ -82,6 +97,25 @@ class ArchiveIs(Repository):
                         "could not find a 'submit_id' in the request form",
                     )
 
+    def pull(self, url):
+        r = self.session.get('http://archive.is/' + url)
+        html = lxml.html.fromstring(r.text)
+
+        try:
+            link = html.xpath('(//*[@id="row0"]/*[@class="THUMBS-BLOCK"]/*/a)[last()]')[0]
+            location = link.get('href')
+            formatted_datetime = link.xpath('div')[0].text_content()
+
+            datetime = pendulum.from_format(
+                formatted_datetime,
+                '%d %b %Y %H:%M',
+                formatter='classic',
+            )
+
+            return datetime, location
+        except IndexError:
+            return None, None
+
 
 class InternetArchive(Repository):
 
@@ -101,3 +135,18 @@ class InternetArchive(Repository):
                     return redirect.headers['Location']
                 elif 'Content-Location' in redirect.headers:
                     return redirect.headers['Content-Location']
+
+    def pull(self, url):
+        r = self.session.head(
+            'https://web.archive.org/web/' + url,
+            allow_redirects=False,
+        )
+        location = r.headers['Location']
+
+        formatted_datetime = urlparse(location).path.split('/').pop(2)
+        datetime = pendulum.from_format(
+            formatted_datetime,
+            'YYYYMMDDHHmmss',
+            formatter='alternative',
+        )
+        return datetime, location

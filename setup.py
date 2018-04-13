@@ -14,6 +14,7 @@ setup(
         'lxml',
         'click',
         'requests',
+        'pendulum',
     ],
     entry_points='''
         [console_scripts]
