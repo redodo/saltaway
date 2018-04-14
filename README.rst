@@ -3,19 +3,19 @@ Saltaway
 
 |build| |coverage| |version| |pyversions| |license|
 
-.. |build| image:: https://img.shields.io/travis/redodo/saltaway.svg?style=flat
+.. |build| image:: https://img.shields.io/travis/redodo/saltaway.svg
     :target: https://travis-ci.org/redodo/saltaway
 
 .. |coverage| image:: https://img.shields.io/codecov/c/github/redodo/saltaway.svg
     :target: https://codecov.io/gh/redodo/saltaway
 
-.. |version| image:: https://img.shields.io/pypi/v/saltaway.svg?style=flat
+.. |version| image:: https://img.shields.io/pypi/v/saltaway.svg
     :target: https://pypi.org/project/saltaway
 
-.. |pyversions| image:: https://img.shields.io/pypi/pyversions/saltaway.svg?style=flat
+.. |pyversions| image:: https://img.shields.io/pypi/pyversions/saltaway.svg
     :target: https://pypi.org/project/saltaway
 
-.. |license| image:: https://img.shields.io/pypi/l/saltaway.svg?style=flat
+.. |license| image:: https://img.shields.io/github/license/redodo/saltaway.svg
     :target: https://github.com/redodo/saltaway/blob/master/LICENSE
 
 Saltaway is a Python package that aims to ease the process of archiving
