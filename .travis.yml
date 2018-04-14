@@ -2,6 +2,17 @@ os: linux
 sudo: false
 language: python
 
+matrix:
+    include:
+        - python: 3.6
+          env: TOXENV=py,lowest,codecov
+        - python: 3.5
+          env: TOXENV=py,codecov
+        - python: 3.4
+          env: TOXENV=py,codecov
+        - python: pypy3
+          env: TOXENV=pypy3,codecov
+
 install:
     - pip install tox
 
