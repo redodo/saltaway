@@ -4,7 +4,7 @@ Saltaway Changelog
 Version 0.2.0
 -------------
 
-Unreleased.
+Released on April 14th 2018.
 
 - Added a max age parameter to enable 'soft' resource archival
 - Get the latest archived version of a resource using the `-q`

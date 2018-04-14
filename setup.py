@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
+import io
 from setuptools import setup
+
+
+with io.open('README.rst', 'rt', encoding='utf8') as f:
+    readme = f.read()
+
 
 setup(
     name='saltaway',
-    version='0.1.1',
+    version='0.2.0',
     description='Instantly archive web pages at various archives.',
+    long_description=readme,
     url='https://github.com/redodo/saltaway',
     author='Hidde Bultsma',
     author_email='me@redodo.io',
