@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import saltaway
+from conftest import TEST_URL
 from saltaway.api import REPOSITORIES
-
-
-TEST_URL = 'https://example.org'
 
 
 def test_pull():

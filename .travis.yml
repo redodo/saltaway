@@ -20,7 +20,9 @@ script:
     - tox
 
 cache:
-    - pip
+    pip: true
+    directories:
+        - tests/.cache/
 
 notifications:
     email: false

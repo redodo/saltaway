@@ -20,7 +20,7 @@ setup(
     install_requires=[
         'lxml>=4.0',
         'click>=5.1',
-        'requests>=2.0',
+        'requests>=2.1',
         'pendulum>=1.3',
     ],
     extras_require={

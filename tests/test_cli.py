@@ -3,10 +3,8 @@ import click
 import pytest
 from click.testing import CliRunner
 
+from conftest import TEST_URL
 from saltaway.cli import cli
-
-
-TEST_URL = 'https://example.org'
 
 
 @pytest.fixture
@@ -19,4 +17,6 @@ def test_push(runner):
     result_b = runner.invoke(cli, [TEST_URL, '--max-age=1h'])
     a_urls = result_a.output.split()
     b_urls = result_b.output.split()
+    print(result_a.output)
+    print(result_b.output)
     assert set(a_urls) == set(b_urls)
